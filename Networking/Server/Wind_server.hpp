@@ -1,4 +1,6 @@
-#pragma once
+#ifndef WIND_SERVER_HPP
+#define WIND_SERVER_HPP
+
 #include <cassert>
 #include <iostream>
 #include <thread>
@@ -8,7 +10,8 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <string>
-
+#include <cstring>
+#include <unistd.h>
 
 const int SIZE = 1024;
 
@@ -22,17 +25,19 @@ namespace Net
             int port;
             char buff[SIZE];
             struct sockaddr_in servaddr;
-            int infolegth;
+            socklen_t infolegth;
             int recivelength;
         public:
-            Server(int port,std::string ip_adress){};
-            ~Server(){};
+            Server(int port,std::string ip_adress);
+            ~Server();
 
-            void init();
+            
             void start();
             void stop();
 
         private:
+
+            void init();
             void receive();
             void process();
             void send();
@@ -41,3 +46,5 @@ namespace Net
 
 
 }
+
+#endif // WIND_SERVER_HPP
